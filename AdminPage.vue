@@ -1,58 +1,50 @@
 <template>
     <div>
-        <h3>관리자-컴포넌트</h3>
-        <menu-1 :title="state.title" 
-            :content="state.content"
-            @admin="handleButton"></menu-1>
+        <h3>AdminPage</h3>
+        <menu-1-page title="전송되는제목"
+            content="전송되는내용" @admin="handleClick"></menu-1-page>
 
-        <menu-2 
-            name="홍길동" tel="010-0000-0000" 
-            @admin1="handleButton1"></menu-2>
-            
-        <menu-3>
+        <menu-3-page>
             <template #output>
-                <input type="text" placeholder="slot" 
-                v-model="state.slot" @admin2="handleButton2">
+                <button @click="handleClick3">버튼</button>
             </template>
-        </menu-3>
+            <template #main>
+                <label>메인</label>
+            </template>
+        </menu-3-page>    
+
+        <menu-4-page>
+            <template #output="slotProps">
+                {{slotProps}}
+                <input type="text" placeholder="아이디" 
+                    :value="slotProps.data.userid"/>
+            </template>
+        </menu-4-page>
     </div>
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity';
-
-import Menu1 from './admin/Menu1Page.vue';
-import Menu2 from './admin/Menu2Page.vue';
-import Menu3 from './admin/Menu3Page.vue';
+import Menu1Page from './admin/Menu1Page.vue';
+import Menu3Page from './admin/Menu3Page.vue';
+import Menu4Page from './admin/Menu4Page.vue';
 
 export default {
-    components : {
-        Menu1, //<menu1
-        Menu2, //<menu2 
-        Menu3  //<menu3
-    },
+    components:{   //남이 만들어 놓은 conponets를 쓰기 위해
+        Menu1Page,
+        Menu3Page,
+        Menu4Page,
+    },  
+
     setup () {
-        const state = reactive({
-            title : 'aaa',
-            content : 'bbb',
-            name : 'ccc',
-            tel : 'ddd',
-            slot : 'eee',
-        });
+        const handleClick = () => {
+            alert('부모 handleclick');
+        }
 
-        const handleButton = () => {
-            alert('Menu1 컴포넌트에서 버튼 클릭');
-        };  
-        
-        const handleButton1 = () => {
-            alert('Menu2 컴포넌트에서 버튼 클릭');
-        };    
+        const handleClick3 = () => {
+            alert('부모 handleclick3');
+        }
 
-        const handleButton2 = () => {
-            alert('Menu3 컴포넌트에서 버튼 클릭');
-        };    
-
-        return {state, handleButton, handleButton1, handleButton2}
+        return {handleClick, handleClick3}
     }
 }
 </script>

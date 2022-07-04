@@ -14,6 +14,8 @@ import ItemInsertPage from '@/components/ItemInsertPage.vue';
 import AdminPage from '@/components/AdminPage.vue';
 
 
+import Board1Page from '@/components/Board1Page.vue';
+
 // 컴포넌트와 url주소 매핑
 const routes = [
     {path:'/', name:'MainPage', component:MainPage},
@@ -26,6 +28,8 @@ const routes = [
     {path:'/item', name:'ItemPage', component:ItemPage},
     {path:'/iteminsert', name:'ItemInsertPage', component:ItemInsertPage},
     {path:'/admin', name:'AdminPage', component:AdminPage},
+
+    {path:'/board1', name:'Board1Page', component:Board1Page},
 ];
 
 // 라우트객체 생성
