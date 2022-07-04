@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link href="./css/join1.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h3>로그인</h3>
+        <hr />
+        <div class="row">
+            <label class="lbl">아이디</label>
+            <input type="text" id="userid" placeholder="아이디" autofocus />
+        </div>
+
+        <div class="row">
+            <label class="lbl">암호</label>
+            <input type="password" id="userpw" placeholder="암호" />
+        </div>
+
+        <div class="row">
+            <label class="lbl"></label>
+            <input type="button" onclick="handleLogin()" value="로그인" />
+        </div>
+    </div>    
+
+    <script src="./js/axios.min.js"></script>
+    <script>
+        const userid = document.getElementById('userid');
+        const userpw = document.getElementById('userpw');
+
+        async function handleLogin() {
+            //유효성 검사
+
+            //유효성 검사 후 벡엔드 호출
+            const url = "http://1.234.5.158:23000/member101/select.json";
+            const headers = {};
+            const body = {
+                id  :   userid.value,
+                pw  :   userpw.value
+            }
+
+            const response = await axios.post(url, body, {headers});
+            console.log(response.data);
+            if(response.data.status === 200) {
+                alert('로그인 되었습니다.');
+                sessionStorage.setItem("TOKEN", response.data.result);
+                window.location.href="main1.html";
+            }
+        }
+    </script>
+</body>
+</html>

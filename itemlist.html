@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>itemlist</title>
+</head>
+<body>
+    <div class="container">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>물품번호</th>
+                    <th>물품명</th>
+                    <th>가격</th>
+                    <th>내용</th>
+                    <th>수량</th>
+                    <th>이미지</th>
+                    <th>등록일</th>
+                    <th>버튼</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="./js/axios.min.js"></script>
+    <script>
+        // [<tbody>]  => 
+        const tbody = document.getElementsByTagName("tbody");
+        console.log(tbody[0]);
+        
+        function mount() {
+            const url = "http://1.234.5.158:23000/item101/selectlist.json";
+            const headers = {"Content-Type":"application/json"};
+            axios.get(url, {headers:headers}).then(function(response){
+                //[{},{}....{}]
+                console.log(response.data);
+                for(let tmp of response.data.result){
+                    tbody[0].innerHTML += 
+                        `<tr>` +
+                            `<td>${tmp._id}</td>`+
+                            `<td>${tmp.name}</td>`+
+                            `<td>${tmp.price}</td>`+
+                            `<td>${tmp.content}</td>`+
+                            `<td>${tmp.price}</td>`+
+                            `<td><img src="http://1.234.5.158:23000${tmp.img}" style="width:50px" /></td>` +
+                            `<td>${tmp.regdate}</td>`+
+                            `<td><button onclick="handleDelete(${tmp._id})">삭제</button></td>`+
+                        `</tr>`    
+                }
+            });
+        }
+        mount(); // 실행시 자동으로 함수 호출
+
+        function handleDelete( no ) {
+            if(confirm('삭제할까요?')) {
+                console.log('handleDelete', no);
+                const url = `http://1.234.5.158:23000/item101/delete.json?no=${no}`;
+                const headers = {"Content-Type":"application/json"};
+
+                axios.delete(url, {headers:headers}).then(function(response){
+                    console.log(response.data);
+                    if(response.data.status === 200){
+                        alert('삭제 되었습니다.');
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

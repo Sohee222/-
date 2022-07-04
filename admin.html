@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지</title>
+<link href="./css/style1.css" rel="stylesheet" />
+<link href="./css/quill.snow.css" rel="stylesheet" />
+</head>
+
+<body>    
+    <div class="container">
+        <a href="admin.html?menu=1"><button>게시물관리</button></a>
+        <a href="admin.html?menu=2"><button>회원관리</button></a>
+        <a href="admin.html?menu=3"><button>물품관리</button></a>
+        <a href="admin.html?menu=4"><button>주문관리</button></a>
+        <hr />
+
+        <div id="menu1" class="menu">
+            <h3>게시물관리</h3>
+
+           <table border="1">
+                <thead>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>등록일</th>
+                    <th>버튼</th>
+                </thead>
+                <tbody id="tbody1">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="menu2" class="menu">
+            <h3>회원관리</h3>
+        </div>
+
+        <div id="menu3" class="menu">
+            <h3>물품관리</h3>
+        </div>
+
+        <div id="menu4" class="menu">
+            <h3>주문관리</h3>
+        </div>        
+    </div>
+
+    <script src="./js/quill.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script>
+        console.log(window);
+        const href = new URL(window.location);
+        const urlParam = href.searchParams;
+        const menu = urlParam.get("menu");
+        console.log(typeof menu, menu);//타입과 값 확인
+
+        // menu  = 3
+        // [ <div>, <div>, <div>, <div> ]
+        
+        // 4개의 항목을 가져옴    
+        const menus = document.getElementsByClassName("menu");
+        
+        // 가져온 항목의 개수
+        console.log(menus.length); // 4
+
+        // 0 부터 개수만큼 반복 ex) 0 1 2 3
+        for(let i=0; i<menus.length; i++) {
+            console.log(i);
+            menus[i].style.display = "none";
+        }
+
+        // menu값에서 1을 뺀 위치는 표시
+        const idx = Number(menu) - 1; 
+        menus[idx].style.display = "";
+
+        if(menu === '1'){ //게시물관리
+            const url = `http://1.234.5.158:23000/board/selectlist.json`;
+            axios.get(url).then(function(response){
+                // [{},{},{} ... {}]
+                console.log(response.data.result);
+                const tbody1 = document.getElementById('tbody1');
+
+                for(let tmp of response.data.result) {
+                    tbody1.innerHTML += 
+                        `<tr>`+
+                            `<td>${tmp.no }</td>` +
+                            `<td>${tmp.title }</td>` +
+                            `<td>${tmp.writer }</td>` +
+                            `<td>${tmp.hit}</td>` +
+                            `<td>${tmp.regdate}</td>` +
+                            `<td>` +
+                                `<button onclick="handleUpdate(${tmp.no})">수정</button>` +
+                                `<button onclick="handleDelete(${tmp.no})">삭제</button>` +
+                            `</td>`+
+                        `</tr>`;    
+                }
+            });
+        }
+        
+        // **삭제 버튼을 눌렀을 때
+        function handleDelete( no ){
+            alert('동작확인용'+ no);            
+            const url = `http://1.234.5.158:23000/board/delete.json?no=${no}`            
+            
+            axios.delete(url).then(function(response) {
+                console.log(response);
+                if(response.data.status === 200) {
+                    alert('삭제 되었습니다.');
+                    window.loation.href="admin.html";
+                }
+            });
+        }
+
+        function handleUpdate() { // 호출되기 전까지 수행되지 않음
+
+            //javascript로 url주소를 변경후에 엔터키를 누름.
+            window.location.href=`admin.html?menu=1`;       
+        }
+        
+        // **수정 버튼을 눌렀을 때              
+        function handleUpdate(no){
+            window.location.href=`boardupdate.html?no=${no}`;
+
+    };
+    </script>
+</body>
+</html>

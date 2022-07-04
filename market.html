@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>market</title>
+
+    <style>
+        .container { 
+            border  : 3px solid #957bdd;
+            width   : 800px;
+            margin  : 0 auto;
+            display : grid;
+            text-align: right; 
+            grid-template-columns   : 1fr 1fr 1fr;
+            grid-auto-rows      : minmax(250px, auto);
+        }
+        .box {
+            margin: 5px;
+            padding: 20px;
+            border: 1px solid #271f26;
+        }
+
+        a {
+            text-decoration: none;
+            color: #111111;
+        }
+
+        a:hover .box{
+            border : 1px solid rgb(255, 0, 0);
+            color : red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">1</div>
+
+    </div>    
+
+    <script src="./js/axios.min.js"></script>
+    <script>
+        const container = document.getElementsByClassName("container");
+        
+        (async function(){ // 자동으로 실행되는 함수
+            const url = "http://1.234.5.158:23000/item101/selectlist.json";
+            const headers = {"Content-Type":"application/json"};
+            
+            const response = await axios.get(url, {headers:headers});
+            
+            console.log(response.data);
+            if(response.data.status === 200){
+                for(let tmp of response.data.result) {
+                    container[0].innerHTML += 
+                        `<a href="marketcontent.html?no=${tmp._id}">`+
+                            `<div class="box">`+
+                                `<p>물품명 : ${tmp.name}</p>`+
+                                `<p>가격 : ${tmp.price}원</p>`+
+                                `<p>내용 : ${tmp.content}</p>`+
+                                `<p>수량 : ${tmp.price}</p>`+
+                                `<img src="http://1.234.5.158:23000${tmp.img}" style="width:100%; height:120px" />`+
+                                `<p>등록일 : ${tmp.regdate}</p>`+
+                            `</div>`+
+                        `</a>`;
+
+                }
+            }
+        })();
+        
+    </script>
+</body>
+</html>

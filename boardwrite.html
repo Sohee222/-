@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글쓰기</title>
+    <link href="./css/style1.css" rel="stylesheet"/>
+    <link href="./css/quill.snow.css" rel="stylesheet"/>
+</head>
+
+<body>
+    <div class="container">
+        <h3> 글쓰기 </h3>
+        <hr />
+        <div style="margin-bottom: 20px;">
+            <label class="lbl">제목</label>        
+            <input type="text" id = "title" />
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label class="lbl">내용</label>
+            <div id="editor"></div>      <!-- Script가 화면을 바꿔줌!-->
+           
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label class="lbl">작성자</label>
+            <input type="text" id = "writer"/>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label class="lbl">이메일</label>
+            <input type="text" /> 
+            <label>@</label>
+            
+            <select>
+                <option>naver.com</option>
+                <option>gmail.com</option>
+                <option>daum.net</option>
+            </select>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label class="lbl">이미지</label>
+            <input type="file" />
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label class="lbl"> </label>
+            <input type="button" value="등록" onclick = "sendData()"  /> 
+        </div>    
+    </div>    
+
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/quill.js"></script>
+    <script>
+        var quill = new Quill('#editor', {
+            theme:'snow'
+        });
+        
+        function sendData() {
+            const obj = {
+                title : document.getElementById('title').value,
+                content : quill.root.innerHTML,
+                writer : document.getElementById('writer').value
+            }
+            // const obj = {title:'a', content:'b', writer:'c'}
+            console.log(obj);
+
+            const url ='http://1.234.5.158:23000/board/insert.json';
+            axios.post(url, obj).then(function(response){
+                console.log(response);
+                if(response.data.status === 200){
+                    alert('글쓰기 성공');
+                    window.location.href ='board.html';
+                }
+            });
+
+            /* 
+            // 메소드(METHOD) 
+
+            // GET  <= 조회 게시판 목록
+            // POST <= 추가 게시판 글쓰기
+            // PUT  <= 변경 게시판 수정
+            // DELETE <= 삭제 게시판 삭제
+            xhr.open('POST', url); 
+            xhr.send( JSON.stringify(obj) ); 
+
+            //JSON.parse => string -> object  받았을 때
+            //JSON.stringify => object -> string 보낼 때
+
+            xhr.addEventListener('load', function(e) {
+                const response = JSON.parse(xhr.response);
+                console.log(response);
+            });
+        */
+    }
+    </script>
+</body>
+</html>

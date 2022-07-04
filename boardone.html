@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./css/style1.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h3>게시판 내용</h3>
+        <hr />
+
+        <p id="no">여기는 글번호 </p>
+        <p id="title">여기는 제목 </p>
+        <p id="content">여기는 내용 </p>
+        <p id="writer">여기는 작성자 </p>
+        <p id="hit">여기는 조회수 </p>
+        <p id="regdate">여기는 날짜 </p>
+
+        <button onclick="handleUpdate()">수정</button>
+        <button onclick="handleDelete()">삭제</button>
+        
+    </div>
+
+    <script src="./js/axios.min.js"></script>
+    <script>
+        // 127.0.0.1:5500/boardone.html?no=207  =>  207 가져오기
+        const href = new URL(window.location);
+        const urlParam = href.searchParams;
+        const no = urlParam.get("no");
+        console.log('no',no);
+
+        if(no === null) {  // no가 없을 경우 강제로 목록으로 이동시킴 
+            window.location.href="board.html";
+        }
+
+        // 벡엔드에서 내용을 받아서 p태그에 표시하기
+        const url = `http://1.234.5.158:23000/board/selectone.json?no=${no}`;
+        
+        axios.get(url).then(function(response){
+            console.log(response);
+            console.log(response.data.result);
+            const obj = response.data.result;
+
+            const no = document.getElementById("no");
+            no.innerHTML = obj.no;
+
+            const title = document.getElementById("title");
+            title.innerHTML = obj.title;
+            
+            const content = document.getElementById("content");
+            content.innerHTML = obj.content;
+            
+            const writer = document.getElementById("writer");
+            writer.innerHTML = obj.writer;
+            
+            const hit = document.getElementById("hit");
+            hit.innerHTML = obj.hit;
+
+            const regdate = document.getElementById("regdate");
+            regdate.innerHTML = obj.regdate;
+        });
+
+
+        function handleDelete() { // 호출되기 전까지 수행되지 않음
+            const url =`http://1.234.5.158:23000/board/delete.json?no=${no}`;
+
+            //벡엔드로 호출하고 결과값을 response로 받음
+            axios.delete(url).then(function(response) {
+                console.log(response);
+                if(response.data.status === 200) {
+                    alert('삭제 되었습니다.');
+                    window.location.href='board.html';
+                }
+            });
+        }
+
+        function handleUpdate() { // 호출되기 전까지 수행되지 않음
+
+            //javascript로 url주소를 변경후에 엔터키를 누름.
+            window.location.href=`boardupdate.html?no=${no}`;            
+        }
+       
+    </script>
+</body>
+</html>

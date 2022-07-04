@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이템</title>
+    <link href="./css/style1.css" rel="stylesheet"/>    
+</head>
+
+<body>    
+    <div class="container">
+        <h3> 아이템 </h3>
+   <hr />
+           <div style="margin-bottom: 10px;"></div>
+       물품명 : <input type ="text" id = "name" /><br />
+           <div style="margin-bottom: 10px;"></div>    
+       가격 : <input type ="number" id ="price" /><br />
+           <div style="margin-bottom: 10px;"></div>    
+       내용 : <textarea rows ="6" id = "content"></textarea><br />
+           <div style="margin-bottom: 10px;"></div>    
+       수량 : <input type ="number" id = "quantity" /><br />
+           <div style="margin-bottom: 10px;"></div>    
+       대표이미지 : 
+           <img scr = "./img/noimage.png" style ="width:100px" id="image" />
+           <input type ="file" onchange="handleImage(this.files)" /><br />
+
+           <div style="margin-bottom: 10px;"></div>   
+       <input type ="button" value = "물품등록" ondblclick="handleInsert()"/>
+   </div>  
+
+
+    <script src="./js/axios.min.js"></script>    
+    <script>
+        // 사용자 입력한 정보를 가져오거나 또는 변경하거나
+        const image = document.getElementById('image');
+        const name = document.getElementById('name');
+        const price = document.getElementById('price');
+        const content = document.getElementById('content');
+        const quantity = document.getElementById('quantity');
+
+        let imagedata = null;
+        
+        function handleImage(files) {
+            //{length:숫자}
+            console.log('handleImage 함수 호출됨.', files);
+            if(files.length > 0) {
+                // console.log(URL.createObjectURL(files[0]));
+                image.src = URL.createObjectURL(files[0]);
+                imagedata = files[0];
+            }
+            else {
+                image.src = './img/noimage.png';
+                imagedata = null;
+            }
+        }
+
+        function handleInsert(){
+            // 유효성 검사
+
+            if(imagedata === null) {
+                alert('이미지 첨부하세요.');
+                return false;
+            }
+
+            const url = "http://1.234.5.158:23000/item101/insert.json";
+            //const headers = {"Content-Type":"application/json"};
+            //이미지가 있을 경우
+            const headers = {"Content-Type":"multipart/form-data"};
+            const body = new FormData(); //form-data타입
+            body.append("name", name.value);
+            body.append("price", Number(price.value));
+            body.append("content", content.value);
+            body.append("quantity", quantity.value);
+            body.append("image", imagedata);
+
+            // 주소, 전달할 내용, 헤드정보
+            axios.post(url, body, {headers:headers})
+                .then(function(response) {
+                // 반환되는 결과를 확인
+                console.log(response.data);
+                if(response.data.status === 200){
+                    alert('등록되었습니다.');
+                    window.loction.reload();
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

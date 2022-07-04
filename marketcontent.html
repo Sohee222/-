@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>marketcontent</title>
+    <link href="./css/style1.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <p>번호 : </p>
+        <p>물품명 : </p>
+        <p>내용 : </p>
+        <p>가격 : </p>
+        <p>수량 : </p>
+        <p>등록일 : </p>
+        <p>이미지 : </p>
+
+        <button onclick="handleOrder()">주문하기</button>
+    </div>
+
+    <script src="./js/axios.min.js"></script>
+    <script>
+        const p = document.getElementsByTagName('p');
+        console.log(typeof(p), p.length, p); //타입, 크기, 내용
+
+        async function mount() {
+            // 주소의 no=123값을 가져오기
+            const urlParams = new URL(window.location).searchParams;
+            const no = urlParams.get('no');
+            console.log(typeof(no), no+1); 
+
+            const url = `http://1.234.5.158:23000/item101/selectone.json?no=${no}`;
+            const headers = {"Content-Type":"application/json"};
+
+            // 1. 벡엔드로 호출 후에 결과값 받기
+            const response = await axios.get(url, {headers:headers});
+            console.log(response.data);
+
+            // 2. 벡엔드로 받은 결과 확인
+            if(response.data.status === 200){                
+                const result = response.data.result;
+                p[0].innerHTML += result._id;
+                p[1].innerHTML += result._name;
+                p[2].innerHTML += result._content;
+                p[3].innerHTML += result._price;
+                p[5].innerHTML += result._regdate;
+
+                let img = document.createElement("img"); //img태그 생성
+                img.src = `http://1.234.5.158:23000${result.img}`;
+                img.width = 100;
+                img.height = 50;
+                //<img src="" style="width:100; height:50" />
+                p[6].append(img); //p태그에 추가하기
+
+                let select = document.createElement("select");
+                // i가 반복 1부터 30까지 1씩 증가
+                for(let i=1;i<=result.quantity;i++){
+                    let option = document.createElement('option');
+                    option.text = i;
+                    select.append(option);
+                }
+                p[4].append(select);
+
+                
+                //p[6].innerHTML += `<img src="http://1.234.5.158:23000${result.img}" style="width:100px" />`;
+            }
+        }
+        mount(); // 함수 호출
+
+        function handleOrder() {
+            alert('주문하기 처리하기');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

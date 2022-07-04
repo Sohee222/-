@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인</title>
+    <link href="./css/main1.css" rel="stylesheet"/>    
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h3>header</h3>
+        </header>
+
+        <section>
+            <nav>
+                <p>메뉴</p>
+                <ul>
+
+                </ul>
+            </nav>
+            <article>
+                <p>내용</p>
+                <table border ="1">                             
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>연락처</th>
+                            <th>이메일</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>아이디1</td>
+                            <td>이름1</td>
+                            <td>010-0000-0001</td>
+                            <td>cccc@ccc.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>아이디2</td>
+                            <td>이름2</td>
+                            <td>010-0000-0002</td>
+                            <td>bbbb@bbb.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>아이디3</td>
+                            <td>이름3</td>
+                            <td>010-0000-0003</td>
+                            <td>aaaa@aaa.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>4</td>
+                            <td>아이디4</td>
+                            <td>이름4</td>
+                            <td>010-0000-0004</td>
+                            <td>aaaa@aaa.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+        </section>
+
+        <footer>
+            <h5>footer</h5>
+        </footer>        
+    </div>   
+    <script>
+        const token = sessionStorage.getItem("TOKEN");
+        console.log(token);
+
+        const ul = document.getElementsByTagName('ul');
+
+        //로그인 X
+        if(token === null) { 
+            ul[0].innerHTML =
+                `<li><a href="login1.html">로그인</a></li>` +
+                `<li><a href="join1.html">회원가입</a></li>`;
+        }
+        else { //로그인 O
+            ul[0].innerHTML =
+                `<li><a href="mypage1.html">마이페이지</a></li>` +
+                `<li><a href="logout1.html">로그아웃</a></li>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form.html</title>
+    <link href="./css/style1.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+      <h3> form 실습</h3>
+      <hr />
+      <div style="margin-bottom: 20px;"></div>
+      <label> 1. input type </label> 
+      <input type="text" id="text" />
+
+      <hr />
+      <label> 2. input type checkbox</label> 
+      <input type="checkbox" id="chk" />   
+      <button id="btn1">체크상태확인용</button>
+
+      <hr />  
+      <label> 3. input type checkbox array</label> 
+      <input type="checkbox" name="chk1" value="html" />  html 
+      <input type="checkbox" name="chk1" value="css"/>  css
+      <input type="checkbox" name="chk1" value="javascript"/>  javascript
+      <button id="btn2">체크상태확인용2</button>
+
+    </div>
+
+    <script>
+       // ==3번예제========== getElements 복수형 쓰기 ========
+       const btn2 = document.getElementById('btn2');
+       const chk1 = document.getElementsByName('chk1');
+
+       btn2. addEventListener('click', function(e){
+           console.log(chk1);  // [input[0], input[1], input[2]]
+           //chk1에 있는 항목을 1개씩 꺼내서 tmp에 저장, for=반복문
+            
+            for( let tmp of chk1 ) {  //ex) 3번 반복
+            // 반복되는 위치
+            // console.log(tmp);
+            if(tmp.checked === true) {
+                
+                console.log('chk 체크함', tmp);
+            }
+            else{
+                console.log('chk 체크 안함', tmp);
+            }
+           }            
+        });
+
+
+        // ==2번예제============================
+
+        const chk = document.getElementById('chk');
+        const btn1 = document.getElementById('btn1');
+
+        btn1. addEventListener('click', function(e){
+            if(chk.checked === true){
+                console.log('chk 체크함');
+            }
+            else{console.log('chk 체크 안함');
+            }
+
+        });
+
+        // ==1번예제============================
+        //const text = document.getElementById('text');
+        const text = document.querySelector('#text');
+        text.value = '추가할 값';   //내용  추가하기
+        
+        // input type의 내용이 변경될 때 반응. (회원가입시 아이디 중복확인에 사용)
+        text.addEventListener('keyup', function(e){
+        console.log(text. value, e);  // 내용 가져오기
+        });
+
+        
+
+    </script>  
+</body>
+</html>

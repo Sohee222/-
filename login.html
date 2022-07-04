@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link href="./css/style1.css" rel="stylesheet"/>
+</head>
+
+<body>
+    <div class="container">        
+        <h3> 로그인</h3>
+        <hr />
+<!--inline 가로높이 설정 안됨
+    block 가로 높이 설정됨, 라인넘김.
+    inline-block : inline의 기능 + block 기능
+ -->
+
+        <div style="margin-bottom: 20px;">
+        <label class="lbl">아이디</label>        
+        <input type="text" placeholder="아이디 입력" />
+        <br />
+        </div>
+        <div style="margin-bottom: 20px;">
+        <label class="lbl">암호</label>
+        <input type="password" placeholder="암호 입력" />
+        <br />
+    </div>                   
+        <input type="button" value="로그인" id="btn" />
+    </div>
+
+    <script> /* div는 보여지는 화면, script는 동작 */ 
+        // 1. 위에 있는 태그를 찾는다.(버튼, 아이디, 암호)
+        const a = document.getElementById('btn');
+        const b = document.getElementById('userid');
+        const c = document.getElementById('userpw');
+        // console.log(a,b,c);
+
+        /* 위에서 찾은 btn개체가 클릭이 되면 반응하라*/
+        a.addEventListener('click', function() {
+            //userid부분에 입력을 하지 않았다면
+            if ( b.value === '' ) {
+                alert('왜 아이디를 입력 안해요??');
+                b.focus(); //커서의 이동
+                return false; //중지
+            }
+
+            //userid부분에 입력을 하지 않았다면
+            if ( c.value === '') {
+                alert('왜 암호를 입력 안해요??');
+                c.focus(); //커서의 이동
+                return false; //중지
+            }
+
+            console.log('백엔드로 데이터를 전송할 타이밍');
+         });
+    </script>
+</body>
+</html>

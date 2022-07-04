@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 수정</title>
+    <link href="./css/quill.snow.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        제목 : <input type="text" id="title"/><br />
+        내용 : <div id="editor" style="height: 300px"></div><br />
+        작성자 : <input type="text" id="writer"/><br />
+        <input type="button" value="수정" onclick="handleUpdate()" />
+    </div>
+
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/quill.js"></script>
+    <script>
+        /* 1. editor 만들기 */
+        const toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
+
+            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
+
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
+
+            ['clean'],                                         // remove formatting button
+            ['image']
+        ];
+
+        let quill = new Quill('#editor', {
+            modules: {
+                toolbar: toolbarOptions
+            },
+            theme:'snow'
+        });
+
+        /* 2. 주소의 no값 받기 */
+        const href = new URL(window.location);
+        const urlParam = href.searchParams;
+        const no = urlParam.get("no");
+
+        /* 3. no가 없을 경우 강제로 목록으로 이동시킴 */
+        if(no === null) {  
+            window.location.href="board.html";
+        }
+
+        /* 4.벡엔드에서 내용을 받기 */
+        const url = `http://1.234.5.158:23000/board/selectone.json?no=${no}`;
+        
+        const title = document.getElementById("title");
+        const writer = document.getElementById("writer");
+
+        axios.get(url).then(function(response){
+            console.log(response.data.result);
+            const obj  = response.data.result;
+            
+            title.value = obj.title;// input에 값을 추가하기
+            quill.root.innerHTML = obj.content; // quill 에티터에 추가
+            writer.value = obj.writer;
+        });
+
+        /* 실제 내용 수정하기 */
+        function handleUpdate() {
+            const url = 'http://1.234.5.158:23000/board/update.json';
+
+            const obj = {
+                no          : no,
+                title       : title.value,
+                content     : quill.root.innerHTML, 
+                writer      : writer.value 
+            };
+            console.log(obj);
+
+            axios.put(url, obj).then(function(response){
+                //반환되는 결과확인
+                console.log(response.data);
+                if(response.data.status === 200){
+                    alert('수정 되었습니다.');
+                    window.location.href=`boardone.html?no=${no}`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+    

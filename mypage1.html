@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+</head>
+
+<body>
+    <div class="container">
+        <button>회원정보수정</button>
+        <button>비밀번호변경</button>
+        <button>회원탈퇴</button>
+        <hr />
+
+        <div id="menu1">
+            <h3>회원정보수정</h3>
+            토큰, 이름, 나이 정보를 보내서 변경
+            <button onclick="handleUpdate()">정보수정하기</button>
+        </div>
+        
+        <div id="menu2">
+            <h3>비밀번호변경</h3>
+            토큰, 현재비번, 바꿀비번, 바꿀비번확인
+            <button onclick="handleUpdatePW()">비번변경하기</button>
+        </div>
+        
+        <div id="menu3">
+            <h3>회원탈퇴</h3>
+            토큰, 현재비번
+            <button onclick="handleDelete()">회원탈퇴하기</button>
+        </div>
+    </div>
+
+    <script>
+        // 개체 찾아서 변수에 보관            
+
+        function handleUpdatePW() {
+            /*
+            // 비밀번호변경
+            const url = `http://1.234.5.158:23000/member101/updatepw.json`;
+            const body = {
+                pw : 현재비번,
+                newpw : 바꿀비번
+            };
+            const response = await axios.put(url, body, {headers});
+            */
+        }
+
+        function handleDelete() {
+            /*
+            // 회원탈퇴
+            const url = `http://1.234.5.158:23000/member101/delete.json`;
+            const body = {
+                pw : 비번
+            }
+            const response = await axios.delete(url, {headers:headers, data:body});
+            */
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax2</title>
+</head>
+<body>
+    <div class="container">
+        <h3>ajax 실습2</h3>
+        <hr />
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ret</th>
+                    <th>data</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const xhr = new XMLHttpRequest();
+        const url = 'http://1.234.5.158:23000/json/exam2.json';
+        xhr.open('GET', url);
+        xhr.send(); 
+
+        xhr.addEventListener('load', function(e){
+            const response = JSON.parse(xhr.response);
+            console.log(response); // [{…}, {…}]
+
+            const tbody = document.getElementById('tbody');
+
+            for(let tmp of response ){ //2번 회전
+                console.log(tmp);
+                // let tmp = {ret: 'y1', data: '123'}
+                tbody.innerHTML += 
+                    `<tr>`+
+                        `<td>${tmp.ret}</td>`+
+                        `<td>${tmp.data}</td>`+
+                    `</tr>`;
+            }
+        });
+    </script>
+</body>
+</html>

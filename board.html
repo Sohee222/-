@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container" style="border:1px solid #cccccc">
+        <div style="margin-bottom: 30px;"></div>
+        <h4>게시판</h4>
+        <hr />
+        
+        <a href="boardwrite.html" class="btn btn-success">글쓰기</a>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>글번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>날짜</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const xhr = new XMLHttpRequest();
+        const url = "http://1.234.5.158:23000/board/selectlist.json?page=1";
+        xhr.open('GET', url);
+        xhr.send(); 
+
+        xhr.addEventListener('load', function(e) {
+            const response = JSON.parse(xhr.response);
+            const tbody = document.getElementById('tbody');
+            if(response.status === 200){
+                for(let tmp of response.result){
+                    tbody.innerHTML += 
+                        `<tr>` +
+                            `<td>${tmp.no}</td>` +
+                            `<td><a href="boardone.html?no=${tmp.no}">${tmp.title}</a></td>` +
+                            `<td>${tmp.writer}</td>` +
+                            `<td>${tmp.hit}</td>` +
+                            `<td>${tmp.regdate}</td>` +
+                        `</tr>`;
+                }
+            }
+            else{
+                alert('서버오류');
+            }
+        });
+    </script>
+</body>
+
+</html>

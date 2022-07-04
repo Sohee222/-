@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax1</title>
+    <link href="./css/style2.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <h3>ajax1 실습1</h3>
+        <hr/ >
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // 백엔드로 정보 요청
+        const xhr = new XMLHttpRequest();
+        const url = 'http://1.234.5.158:23000/json/exam1.json';
+        xhr.open('GET', url);
+        xhr.send();
+
+        // 백엔드로 전송된 데이터가 완료되는 시점
+        xhr.addEventListener('load', function(e){
+            // JSON.parse(데이터) string=>object
+            // JSON.stringify(데이터) object => string
+            const b = JSON.parse(xhr.response);  //받은것
+            console.log(typeof b);   //object ㅏ인면 변경
+            console.log(b,b.ret,b.data);
+           
+            const output = document.getElementById("output");
+            output.innerHTML = 
+                `<p>${b.ret}</p>`+
+                `<p>${b.data}</p>`;
+        });
+    </script>
+</body>
+</html>

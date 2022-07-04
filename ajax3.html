@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax3</title>
+</head>
+<body>
+    <div class="container">
+        <h3>ajax 실습3</h3>
+        <hr />
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>species</th>
+                    <th>foodslikes</th>
+                    <th>foodsdislikes</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        const xhr = new XMLHttpRequest();
+        const url = 'http://1.234.5.158:23000/json/exam5.json';
+        xhr.open('GET', url);
+        xhr.send(); 
+
+        xhr.addEventListener('load', function(e){
+            const response = JSON.parse(xhr.response);
+            console.log(response); // [{…}, {…}]
+
+            const tbody = document.getElementById('tbody');
+
+            for(let tmp of response ){ //2번 회전
+                console.log(tmp);
+                // let tmp = {name: 'AAA', species: 'cat'}
+                tbody.innerHTML += 
+                    `<tr>`+
+                        `<td>${tmp.name}</td>`+
+                        `<td>${tmp.species}</td>`+
+                        `<td>${tmp.foods.likes}</td>`+
+                        `<td>${tmp.foods.dislikes}</td>`+
+                    `</tr>`;
+                                  
+            }
+        });
+    </script>
+</body>
+</html>

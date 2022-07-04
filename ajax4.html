@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax4</title>
+</head>
+<body>
+    <div class="container">
+        <h3>ajax 실습4</h3>
+        <hr />
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>나이</th>
+                    <th>국어점수</th>
+                    <th>영어점수</th>
+                    <th>수학점수</th>
+                    <th>합계</th>
+                    <th>평균</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const xhr = new XMLHttpRequest();
+        const url = 'http://1.234.5.158:23000/json/exam10.json';
+        xhr.open('GET', url);
+        xhr.send(); 
+
+        xhr.addEventListener('load', function(e){
+            const response = JSON.parse(xhr.response);
+            console.log(response); //[{..},{...}]
+
+            const tbody = document.getElementById('tbody');
+
+            if (response.ret === 'y'){            
+
+                for(let tmp of response.data){ 
+                    // const tmp ={id:'id1', name:'가나다1', age:31, score:{...}}
+
+                   console.log(tmp.id);          
+                   console.log(tmp.score.math);
+                   console.log(tmp.score.kor);
+                   console.log(tmp.score.eng);
+                
+                   let sum = tmp.score.math + tmp.score.kr + tmp.score.eng;
+
+                   tbody.innerHTML +=
+                        `<tr>`+
+                            `<td>${tmp.id}</td>`+
+                            `<td>${tmp.name}</td>`+
+                            `<td>${tmp.age}</td>`+
+                            `<td>${tmp.score.kor}</td>`+
+                            `<td>${tmp.score.eng}</td>`+
+                            `<td>${tmp.score.math}</td>`+
+                            `<td>${tmp.score.math + tmp.score.kor + tmp.score.eng}</td>`+
+                            `<td>${tmp.score.math + tmp.score.kor + tmp.score.eng}</td>`+
+                        `</tr>`;                        
+                                
+            }}
+        });
+    </script>
+</body>
+</html>

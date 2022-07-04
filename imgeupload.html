@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지</title>
+    <link href="./css/style1.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class = "container">
+        <h3>물품등록</h3>
+        <hr />
+        
+        <div>
+        <div style="margin-bottom: 10px;"></div>
+        <label class="lbl">물품명 :</label>   
+        <input type="text" id="name" />
+        </div>
+
+        <div>
+        <div style="margin-bottom: 10px;"></div>
+        <label class="lbl"> 가격 :</label>  
+        <input type="text" id="price" / />
+        </div>
+        
+        <div>
+        <div style="margin-bottom: 10px;"></div>
+        <label class="lbl"> 이미지 : </label> 
+        <img src="./img/noimage.png" style="width : 80px;" id="image"/>
+        <input type="file" id="file"/>
+        </div>
+
+        <div>
+        <div style="margin-bottom: 10px;"></div>
+        <label class="lbl"> 버튼 :</label> 
+        <input type="button" value="등록" id="btn" /> 
+        </div>    
+
+    </div>
+
+    <script>
+        const name = document.getElementById("name");
+        const price = document.getElementById ("price");
+        const image = document.getElementById ("image");
+        const file = document.getElementById ("file");
+        const btn = document.getElementById ("btn");
+        console.log(name, price, image, file, btn); //확인용
+
+        //**별개의 이벤트**//  
+        file.addEventListener('change', function(e){
+           /** if, else 동시에 할 순 없다. 둘 중 하나 **/
+            if ( e.target.files[0] ) { //첨부함.
+                console.log('T');
+                image.src = URL.createObjectURL(e.target.files[0]);
+            }
+
+            else { //첨부하지 않음
+                console.log('F');
+                image.src="./img/noimage.png";
+            }
+            
+        });
+
+            //**별개의 이벤트**//    
+            btn.addEventListener('click', function(e){
+            if(name.value === ''){
+                alert('왜 물품명을 입력 안해요??');
+                name.focus();
+                return false;
+                // 1. 이벤트 종료 됨. 67라인을 수행할 수 없게 만듦.
+
+            }
+  
+            if(price.value === ''){
+                
+            }
+
+            //2. 이 시점에 벡엔드로 전송할 타이밍.
+        });
+    </script>    
+</body>
+</html>

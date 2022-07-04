@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>object</title>
+    <link href="./css/style1.css" rel="stylesheet"/>
+    
+</head>
+
+<body>
+    <div class="container">
+        <h3> 오브젝트 실습 </h3>
+        <hr />
+        <div id ="output1">
+            
+        </div>
+
+        <table border="1"> 
+            <thead>
+                <tr>
+                   <th>이름</th>
+                   <th>나이</th>
+                   <th>연락처</th>
+                </tr>
+            </thead>
+            <tbody id = "tbody">
+            </tbody>
+        </table>
+
+    </div>
+    
+    <script>
+        
+        const tbody = document.getElementById('tbody');
+
+        // [{},{},{}]  <= 회원 3명, 회원1명은 연락처, 이름, 나이
+        const memberlist = [
+            
+           {phone:'010-0001-0002', name:'홍길동', age:'23'},
+           {phone:'010-0001-0003', name:'홍길은', age:'33'},
+           {phone:'010-0001-0004', name:'홍길금', age:'45'}
+        ];
+
+        // memberlist의 배열 개수 만큼 반복하면서 tmp로 복사
+        for (let tmp of memberlist) {
+            tbody.innerHTML +=
+                `<tr>` +
+                   `<td>${tmp.name}</td>` +
+                   `<td>${tmp.age}</td>` +
+                   `<td>${tmp.phone}</td>` +
+                `</tr>`;
+        }
+
+        const output1 = document.getElementById('output1');        
+        
+        // 백엔드에서 전송되는 데이터(JSON포멧):정확한 항목과 값을 입력해주어야 혼동이 없다.
+        const member1 = {phone:'010-0001-0002', name:'홍길동', age:'23'};
+        console.log(member1.age);
+        console.log(member1.name);
+        console.log(member1.phone);
+
+        output1.innerHTML = 
+           `<p>${member1.name}</p>` +
+           `<p>${member1.age}</p>` +
+           `<p>${member1.phone}</p>`;
+        
+    </script>
+</body>
+</html>

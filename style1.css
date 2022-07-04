@@ -1,0 +1,12 @@
+.container {
+    border:5px solid #cfe2f3;   /* 테두리 */
+    padding:100px;     /* 들여쓰기*/
+    
+}
+
+ /* 라벨 스타일*/
+.lbl{
+    display : inline-block; 
+    width : 80px;
+    border : 2px solid #ffffff
+}

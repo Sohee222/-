@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>array</title>
+    <link href="./css/style1.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <h3> array </h3>
+        <hr />
+        <div id ="output1">            
+        </div>
+        <table border="1"> 
+            <div style="margin-bottom: 20px;"></div>
+            <thead>
+                <tr>
+                   <th>코드</th>
+                   <th>물품명</th>
+                   <th>가격</th>
+                   
+                </tr>
+            </thead>
+            <tbody id = "tbody">
+            </tbody>
+        </table>             
+                                  
+        <table border="1"> 
+            <thead>
+                <div style="margin-bottom: 20px;"></div>
+                <tr>
+                   <th>번호</th>
+                   <th>제목</th>
+                   <th>날짜</th>
+                </tr>
+            </thead>
+            <tbody id = "tbody1">
+            </tbody>
+        </table>
+       </div>
+         
+        <script>
+        //const a1 = {abc:[{abc:'aaa', asdf:'KKK'}]};
+        //const.a2 = a1,abc;  //[{  }
+        //const a3 = a2[0], asdf;
+        //console.lg(a3);
+
+            //============== 예제2 ====================        
+        const tbody1 = document.getElementById('tbody1');
+        const data1 = [
+                        {no:'1',title:'제목1', date:'2020-06'},
+                        {no:'2',title:'제목2', date:'2020-07'},
+                        {no:'3',title:'제목3', date:'2020-08'}
+        ]     
+        for (let tmp of data1) {
+            tbody1.innerHTML += 
+                `<tr>` +
+                   `<td>${tmp.no}</td>` +
+                   `<td>${tmp.title}</td>` +
+                   `<td>${tmp.date}</td>` +
+                `</tr>`;
+        } ;        
+        </script>
+        <script>
+        // {  } +  []    ============== 예제1 ==============
+        // {result:{data:[{},{}]}} 
+
+        // 백엔드에서 받은 데이터를 테이블로 표시
+        // 정보는 "코드, 물품명, 가격"
+        //const date = {result : [{},{},{}]} =>date.result [{},{}]
+        
+        const tbody = document.getElementById('tbody');
+        const memberlist = [
+            {code:'1', name : '사과1', price:'2230'},
+            {code:'2', name : '사과2', price:'3230'},
+            {code:'3', name : '사과3', price:'4230'},
+            {code:'4', name : '사과4', price:'5230'},
+            {code:'5', name : '사과5', price:'6230'}
+        ]
+        for (let tmp of memberlist) {
+            tbody.innerHTML += 
+                `<tr>` +
+                   `<td>${tmp.code}</td>` +
+                   `<td>${tmp.name}</td>` +
+                   `<td>${tmp.price}</td>` +
+                `</tr>`;
+        };    
+    </script>    
+</body>
+</html>

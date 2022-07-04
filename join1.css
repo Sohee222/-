@@ -1,0 +1,15 @@
+.container {
+    width: 700px;
+    boder : 1px solid #c1e9f1;
+    padding : 30px;
+    margin : 0 auto;
+}
+
+.lbl {
+    display: inline-block;
+    width: 100px;
+}
+
+.row{
+    margin-bottom : 10px;
+}
