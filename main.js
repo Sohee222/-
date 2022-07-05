@@ -3,6 +3,7 @@ import App from './App.vue';
 
 // 직접만든 설정
 import routes from './routes/index.js';
+import stores from './stores/index.js';
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -15,6 +16,9 @@ import 'element-plus/dist/index.css'
 const app = createApp(App);
 
 app.use(routes);
+app.use(stores);
+
 app.use(ElementPlus);
 
 app.mount('#app');
+
