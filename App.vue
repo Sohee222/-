@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <router-link to="/"><button>메인</button></router-link>
-    <router-link to="/login"><button>로그인</button></router-link>
-    <router-link to="/join"><button>회원가입</button></router-link>
-    <router-link to="/board"><button>게시판</button></router-link>  
-    <router-link to="/item"><button>물품</button></router-link>   
-    <router-link to="/admin"><button>관리자</button></router-link>  
-    <router-link to="/board1"><button>게시판1</button></router-link>     
-    <hr />
+<div>
+  <el-menu class ="el-menu-demo"
+    background-color="#545c64"  
+    text-color="#fff"
+    active-text-color="#ffd04b"
+    mode="horizontal" :router="true">    
 
-    <router-view></router-view>    
+        <el-menu-item index="/">메인</el-menu-item>
+        <el-menu-item index="/login">로그인</el-menu-item>
+        <el-menu-item index="/join">회원가입</el-menu-item>
+        <el-menu-item index="/board">게시판</el-menu-item>
+        <el-menu-item index="/item">물품</el-menu-item>
+        <el-menu-item index="/admin">관리자</el-menu-item>
+        <el-menu-item index="/board1">게시판1</el-menu-item>   
+        </el-menu>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -24,6 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 
 </style>
 

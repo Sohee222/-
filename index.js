@@ -15,6 +15,8 @@ import AdminPage from '@/components/AdminPage.vue';
 
 
 import Board1Page from '@/components/Board1Page.vue';
+import Board1ContentPage from '@/components/Board1ContentPage.vue';
+import Board1WritePage from '@/components/Board1WritePage.vue';
 
 // 컴포넌트와 url주소 매핑
 const routes = [
@@ -30,6 +32,8 @@ const routes = [
     {path:'/admin', name:'AdminPage', component:AdminPage},
 
     {path:'/board1', name:'Board1Page', component:Board1Page},
+    {path:'/board1content', name:'Board1ContentPage', component:Board1ContentPage},
+    {path:'/board1write', name:'Board1WritePage', component:Board1WritePage},
 ];
 
 // 라우트객체 생성
@@ -39,4 +43,5 @@ const router = createRouter({
 });
 
 export default router;
+
 

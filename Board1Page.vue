@@ -2,31 +2,44 @@
     <div class="container">
         <div class="item">1</div>
         <div class="item">
-            <div style="width:200px; margin-bottom: 20px; ">
+
+            <el-button type="success" @click="handleBoardWrite">
+                 글쓰기
+            </el-button>
+            
+            <div style="width:200px; margin-bottom: 20px;">
                 <el-input v-model="state.text" placeholder="검색어를 입력하세요"
                     @keyup.enter="handleSearch" />
             </div>
 
-            <el-table :data="state.rows" style="width: 100%" @row-click="handleContent">
+            <el-table :data="state.rows" style="width: 100%; cursor: pointer;" @row-click="handleContent">
                 <el-table-column prop="_id" label="번호" width="80" />
                 <el-table-column prop="title" label="제목" />
                 <el-table-column prop="writer" label="작성자" />
                 <el-table-column prop="hit" label="조회수" />
                 <el-table-column prop="regdate" label="날짜" width="200" />
             </el-table>
-            
+
+
             <el-pagination layout="prev, pager, next" :total="state.total"
-                @current-change="handlePage" />
-          </div>
-     </div>
+                    @current-change="handlePage" 
+                    style="width:400px; margin:0 auto; border:1px solid red"/>
+            
+        </div>
+    </div>
 </template>
 
 <script>
 import { reactive } from '@vue/reactivity'
 import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 export default {
     setup () {
+
+        const router = useRouter();
+
+
         // 상태 변수 생성
         const state = reactive({
             rows    : null,
@@ -66,13 +79,19 @@ export default {
 
         const handleContent = (row) => {
             console.log('Board1Page.vue => handleContent', row);
+            router.push({name:'Board1ContentPage', query:{no:row._id}});
+        }
+
+        const handleBoardWrite = () => {
+            router.push({path:'board1write'});
         }
 
         return {
             state, 
             handlePage, 
             handleSearch, 
-            handleContent
+            handleContent,
+            handleBoardWrite
         };
     }
 }

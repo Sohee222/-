@@ -1,17 +1,76 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <link href="./css/style2.css" rel="stylesheet"/>
+   
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h3>header 영역</h3>
+        </header>
+
+        <section>
+            <nav>
+                <p>nav 영역</p>
+                <ul>
+                    <li><a href="index.html">메인</a></li>
+                    <li><a href="login.html">로그인</a></li>
+                    <li><a href="join.html">회원가입</a></li>
+                    <li><a href="ajax1.html">ajax1</a></li>
+                </ul>
+            </nav>
+            <article>
+                
+                <p>article 영역</p>
+                <table border ="1">                             
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>연락처</th>
+                            <th>이메일</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>아이디1</td>
+                            <td>이름1</td>
+                            <td>010-0000-0001</td>
+                            <td>a@a.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>아이디1</td>
+                            <td>이름1</td>
+                            <td>010-0000-0002</td>
+                            <td>a@a.com</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>아이디1</td>
+                            <td>이름1</td>
+                            <td>010-0000-0003</td>
+                            <td>a@a.com</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <footer>
+            <h4>footer 영역</h4>
+        </footer>
+    </div>
+</body>
 </html>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        메뉴1 컴포넌트<br />
+        메뉴1 컴포넌트 props<br />
         {{ state.title }}
         {{ state.content }}
         <button @click="handleButton">버튼</button>
@@ -11,18 +11,21 @@
 <script>
 import { reactive } from '@vue/reactivity'
 export default {
-    props:{
-        title : String,
-        content : String,
+    props:{   // 부모로 부터 전송되어야 하는 값을 정의
+        title : String,    // 문자로 된 title
+        content : String,  // 문자로 된 content
     },
     
-    setup (props, { emit }) {
+    setup (props, { emit }) {   //props는 Admin에서 오는 값을 받는다.
         const state =  reactive({
             title : props.title,
-            content : props.content + "!!!"
+            content : props.content + "추가된 문자"
         });
 
         const handleButton = () => {
+            alert('버튼 클릭됨');
+
+            //부모의 admin 이벤트 발생시킴
             emit('admin',{});
         };
 
@@ -34,5 +37,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-
-
