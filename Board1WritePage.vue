@@ -11,8 +11,7 @@
             </el-form-item>
 
             <el-form-item label="내용">
-                <ckeditor v-model="state.content" 
-                    :editor="state.editor" @ready="handleEditorInit"></ckeditor>
+                <ckeditor v-model="state.content" :editor="state.editor" @ready="handleEditorInit"></ckeditor>
             </el-form-item>
 
             <el-form-item label="작성자">
@@ -29,15 +28,17 @@
 </template>
 
 <script>
+// CMD> npm install --save @ckeditor/ckeditor5-vue @ckeditor/ckeditor5-build-classic
+
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import { reactive } from '@vue/reactivity'
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-import UploadAdapter from './UploadAdapter';
 
-// 이미지 업로드용
+//이미지 업로드용
+import UploadAdapter from './UploadAdapter.js';
 
 export default {
     components : {
@@ -56,14 +57,12 @@ export default {
         const handleEditorInit = (editor) => {
 
             // 직접 만든 UploadAdapter.js 적용
-            editor.plugins.get('FileRepository')
-                .createUploadAdapter =(loader) => {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
                     return new UploadAdapter(loader);
-                }
+            }
 
             editor.editing.view.change(writer => {
-                writer.setStyle('height', '400px', 
-                    editor.editing.view.document.getRoot());
+                writer.setStyle('height', '400px', editor.editing.view.document.getRoot());
             });
         };
 
@@ -108,4 +107,3 @@ export default {
         padding : 30px;
     }
 </style>
-

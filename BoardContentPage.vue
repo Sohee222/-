@@ -4,7 +4,7 @@
 
             {{state}}
 
-        <div v-if="state.row"> 
+            <div v-if="state.row"> 
             번호 : {{ state.row._id }}<br />
             제목 : {{ state.row.title }}<br />            
             내용 : {{ state.row.content }}<br />
