@@ -25,6 +25,7 @@ import Logout1Page from '@/components/Logout1Page.vue';
 import Login2Page from '@/components/Login2Page.vue';
 
 
+
 // 컴포넌트와 url주소 매핑
 const routes = [
     {path:'/', name:'MainPage', component:MainPage},
@@ -48,6 +49,7 @@ const routes = [
     {path:'/logout1', name:'Logout1Page', component:Logout1Page},
 
     {path:'/login2', name:'Login2Page', component:Login2Page},
+
 ];
 
 // 라우트객체 생성

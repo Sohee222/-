@@ -5,7 +5,8 @@
         </div>
 
         <el-form label-width="80px">
-            <el-form-item label="아이디">
+            <div style="width:405px; margin-bottom: 20px;">
+            <el-form-item label="아이디" >
                 <el-col :span="18">
                     <el-input v-model="state.userid" @keyup="handleIDCheck"/>
                 </el-col>
@@ -14,7 +15,9 @@
                     <label v-html="state.idcheck"></label>
                 </el-col>
             </el-form-item>
+        </div>
 
+            <div style="width:325px; margin-bottom: 20px;">
             <el-form-item label="암호">
                 <el-input v-model="state.userpw" 
                     type="password"
@@ -29,7 +32,7 @@
                 <el-input type="number" v-model="state.userage" />
             </el-form-item>
 
-
+        </div> 
             <el-form-item label="이메일">
                 <el-col :span="11">
                     <el-input v-model="state.useremail1" />
@@ -37,6 +40,7 @@
                 <el-col :span="2" class="text-center">
                     <span class="text-gray-500">@</span>
                 </el-col>
+               
                 <el-col :span="11">
                     <el-select v-model="state.useremail2" placeholder="이메일선택">
                         <el-option label="naver.com" value="naver.com" />
@@ -45,7 +49,6 @@
                     </el-select>
                 </el-col>
             </el-form-item>
-
 
             <el-form-item style="margin-top:30px">
                 <el-button type="primary" @click="handleJoin">회원가입</el-button>

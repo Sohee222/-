@@ -26,6 +26,7 @@ import { reactive } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 
 export default {
+    
     setup () {
         const router = useRouter();
 

@@ -3,45 +3,51 @@
         <el-tabs tab-position="left" style="height: 300px" class="demo-tabs">
             <el-tab-pane label="회원정보변경">
 
-            <div style="width:300px;  margin-bottom: 20px;">
-            <el-form label-width="130px">
+                <el-form label-width="120px" style="padding:20px">
                     <el-form-item label="이름">
-                        <el-input v-model="state.username" />
+                        <el-input v-model="state.username" style="width:150px"/>
                     </el-form-item>
                     <el-form-item label="나이">
-                        <el-input type="number" v-model="state.userage" />
-            </el-form-item> 
-            </el-form>
-
-            <el-form-item style="margin-top:30px; padding-left: 100px;">              
-            <el-button type="primary" @click="handleUpdate1">변경하기</el-button>              
-                <el-button>취소하기</el-button></el-form-item>
-            </div>
+                        <el-input v-model="state.userage" style="width:150px"/>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="handleUpdate">변경</el-button>
+                        <el-button>취소</el-button>
+                    </el-form-item>
+                </el-form>
             </el-tab-pane>
 
-            <div style="width:300px; margin-bottom: 20px;">
             <el-tab-pane label="비밀번호변경">
-            <el-form label-width="130px">
-            <el-form-item label="현재 비밀번호">
-                <el-input v-model="state.userpw" type="password" autocomplete="off" />
-            </el-form-item>
-        
-            <el-form-item label="새로운 비밀번호">
-                <el-input v-model="state.userpw1" type="password" autocomplete="off" />
-            </el-form-item>
-            </el-form>
-
-            <el-form-item style="margin-top:30px; padding-left: 100px;">            
-            <el-button type="primary" @click="handleLogout1">변경하기</el-button>
-                <el-button>취소하기</el-button></el-form-item>
+                <el-form label-width="120px" style="padding:20px">
+                    <el-form-item label="현재암호">
+                        <el-input v-model="state.userpw" type="password" autocomplete="off" style="width:160px" />
+                    </el-form-item>
+                    <el-form-item label="변경암호">
+                        <el-input v-model="state.userpw1" type="password" autocomplete="off" style="width:160px" />
+                    </el-form-item>
+                    <el-form-item label="변경암호확인">
+                        <el-input v-model="state.userpw2" type="password" autocomplete="off" style="width:160px" />
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" 
+                                @click="handleUpdatePw">암호변경</el-button>
+                        <el-button>취소</el-button>
+                    </el-form-item>
+                </el-form>    
             </el-tab-pane>
-            </div>
 
-            <el-form-item style="margin-top:50px; padding-left: 50px;">
             <el-tab-pane label="회원탈퇴">
-            <el-button type="primary" @click="handleLogout1">회원탈퇴</el-button>
-                 <el-button>취소하기</el-button>
-            </el-tab-pane></el-form-item>
+                <el-form label-width="110px" style="padding:20px">
+                    <el-form-item label="현재암호">
+                        <el-input v-model="state.userpw" type="password" autocomplete="off" style="width:160px" />
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" 
+                                @click="handleDelete">회원탈퇴</el-button>
+                        <el-button>취소</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -50,13 +56,19 @@
 import { reactive } from '@vue/reactivity'
 import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 export default {
     setup () {
 
+        const router = useRouter();
+
         const state = reactive({
-            username: '',
-            userage : 0,
-            token : sessionStorage.getItem("TOKEN")
+            username    : '', // 이름
+            userage     : 0,  // 나이 
+            token       : sessionStorage.getItem("TOKEN"),
+            userpw      : '',  // 현재비번
+            userpw1     : '',  // 바꿀비번
+            userpw2     : '',  // 바꿀비번 확인 
         });
 
         // 로그인한 사용자의 이름과 나이 정보 받기
@@ -69,6 +81,9 @@ export default {
 
             const {data} = await axios.get(url, {headers});
             console.log(data);
+
+            state.username = data.result.name;
+            state.userage = data.result.age;
         }
 
         onMounted(()=>{
@@ -80,7 +95,7 @@ export default {
             const url =`/member101/update.json`;
             const headers = {
                 "Content-Type":"application/json",
-                "auth" : state.token    // 토큰 : 로그인 정보
+                "auth" : state.token
             };
             const body = {
                 name :state.username,
@@ -89,13 +104,47 @@ export default {
 
             const { data } = await axios.put(url, body, {headers});
             console.log(data);
-
-            state.username = data.result.name;
-            state.userage = data.result.age;
         }
 
 
-        return {state, handleUpdate}
+        const handleUpdatePw = async() => {
+            //유효성검사 변경암호2개 일치하는지
+            const url = `/member101/updatepw.json`;
+            const headers = {
+                "Content-Type":"application/json",
+                "auth" : state.token
+            };
+            const body = {
+                pw : state.userpw,
+                newpw : state.userpw1
+            }
+            const { data } = await axios.put(url, body, {headers});
+            console.log(data);
+            if(data.status === 200){
+                alert('변경되었습니다.');
+            }
+        }
+
+
+        const handleDelete = async() => {
+            const url= `/member101/delete.json`;
+            const headers = {
+                "Content-Type":"application/json",
+                "auth" : state.token
+            };
+            const body = {
+                pw : state.userpw,
+            }
+            const {data} = 
+                await axios.delete(url, {headers:headers, data:body});
+            console.log(data);
+            if(data.status === 200){
+                alert('탈퇴되었습니다.');
+                router.push({path:'/logout1'});
+            }
+        }
+
+        return {state, handleUpdate, handleUpdatePw, handleDelete}
     }
 }
 </script>
@@ -107,5 +156,4 @@ export default {
         padding : 10px;
         margin : 0 auto;
     }
-
 </style>

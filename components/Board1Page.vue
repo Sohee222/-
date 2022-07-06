@@ -23,7 +23,7 @@
 
             <el-pagination layout="prev, pager, next" :total="state.total"
                     @current-change="handlePage" 
-                    style="width:400px; margin:0 auto; border:1px solid red"/>
+                    style="width:400px; margin:0 auto; "/>
             
         </div>
     </div>
