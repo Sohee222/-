@@ -13,7 +13,8 @@
         <el-menu-item index="/board">게시판</el-menu-item>
         <el-menu-item index="/item">물품</el-menu-item>
         <el-menu-item index="/admin">관리자</el-menu-item>
-        <el-menu-item index="/board1">게시판1</el-menu-item>     
+        <el-menu-item index="/board1">게시판1</el-menu-item>
+        <el-menu-item index="/market">쇼핑몰</el-menu-item>                
                                               
         <el-menu-item index="/login1" v-if="state.logged === false">로그인1</el-menu-item>
         <el-menu-item index="/join1" v-if="!state.logged">회원가입1</el-menu-item>
@@ -21,6 +22,7 @@
         <el-menu-item index="/logout1" v-if="state.logged">로그아웃1</el-menu-item>
         
         <el-menu-item index="/login2">로그인2</el-menu-item>    
+
         </el-menu>
         {{state}}
     <router-view></router-view>

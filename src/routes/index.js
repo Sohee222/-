@@ -21,9 +21,11 @@ import Login1Page from '@/components/Login1Page.vue';
 import Join1Page from '@/components/Join1Page.vue';
 import Mypage1Page from '@/components/Mypage1Page.vue';
 import Logout1Page from '@/components/Logout1Page.vue';
+import ItemContentPage from '@/components/ItemContentPage.vue';
+import MarketPage from '@/components/MarketPage.vue';
+import MarketContentPage from '@/components/MarketContentPage.vue';
 
 import Login2Page from '@/components/Login2Page.vue';
-
 
 
 // 컴포넌트와 url주소 매핑
@@ -47,17 +49,28 @@ const routes = [
     {path:'/join1', name:'Join1Page', component:Join1Page},
     {path:'/mypage1', name:'Mypage1Page', component:Mypage1Page},
     {path:'/logout1', name:'Logout1Page', component:Logout1Page},
+    {path:'/itemc', name:'ItemContentPage', component:ItemContentPage},
+    {path:'/market', name:'MarketPage', component:MarketPage},
+    {path:'/marketcontent', name:'MarketContentPage', component:MarketContentPage},
 
     {path:'/login2', name:'Login2Page', component:Login2Page},
-
 ];
 
-// 라우트객체 생성
+// 라우트 객체 생성
 const router = createRouter({
     history : createWebHashHistory(),
     routes  : routes,
 });
 
+// 라우트의 이동 경로를 추적 할 수 있음 (로그인, 로그아웃은 추가하면 안됨)
+router.beforeEach((to, from, next) => {
+    console.log('router => ', to, from);
+    if(to.path !== '/login1' && to.path !== '/logout1'
+        && to.path !== '/login' && to.path !== '/logout'){
+        sessionStorage.setItem("CURRENT_URL", to.path);
+        sessionStorage.setItem("CURRENT_QUERY", JSON.stringify(to.query));
+    }
+    next();
+});
+
 export default router;
-
-

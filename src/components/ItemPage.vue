@@ -5,21 +5,19 @@
 
 
         <el-table :data="state.row" style="width: 100%"
-            :default-sort="{ prop: 'name', order: 'ascending' }">
-            <el-table-column prop="_id" label="번호" width="60" />
+            :default-sort="{ prop: 'regdate', order: 'descending' }">
 
-            <el-table-column label="_id" width="120">
+            <el-table-column label="번호" width="60">
                 <template #default="scope">
                     <router-link :to="{path:'/itemc', query:{no:scope.row._id}}">{{scope.row._id}}</router-link>
                 </template>
-            </el-table-column>        
-            
+            </el-table-column>                  
 
-            <el-table-column sortable prop="name" label="물품명" />
+            <el-table-column prop="name" label="물품명" />
             <el-table-column prop="content" label="내용" />
             <el-table-column prop="price" label="가격" width="100" />
             <el-table-column prop="quantity" label="수량" width="100" />
-            <el-table-column prop="regdate" label="등록일" />
+            <el-table-column sortable prop="regdate" label="등록일" />
 
             <el-table-column label="이미지" width="120">
                 <template #default="scope">
@@ -35,9 +33,10 @@
             </el-table-column>
         </el-table>
         
-        <el-pagination background layout="prev, pager, next" :total="state.total"
+
+        <el-pagination background layout="prev, pager, next" 
             :page-size="12"
-            @current-change="handlePage" style ="width:400px; margin:0 auto;" />
+            @current-change="handlePage" :total="state.total" />
 
 
         <!-- 삭제 확인용 다이얼로그 -->
@@ -190,6 +189,5 @@ export default {
 <style lang="css" scoped>
     .container {
         width   : 100%;
-        padding : 20px;
     }
 </style>

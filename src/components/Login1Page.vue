@@ -30,9 +30,11 @@
 import { reactive } from '@vue/reactivity';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { useStore } from 'vuex';
 export default {
     setup () {
         const router = useRouter();
+        const store  = useStore();
 
         const state = reactive({
             userid : 'abcd',
@@ -53,7 +55,13 @@ export default {
             if(data.status === 200) {
                 alert('로그인 성공');
                 sessionStorage.setItem("TOKEN", data.result);
-                router.push({path:'/'});
+                store.commit('setLogged', true);
+
+                const backurl = sessionStorage.getItem("CURRENT_URL");
+                const backquery = sessionStorage.getItem("CURRENT_QUERY");
+                console.log(backurl, backquery);
+
+                router.push({path: backurl, query:JSON.parse(backquery)});
             }
         }
 
@@ -70,3 +78,7 @@ export default {
         margin : 20px auto 10px auto;
     }
 </style>
+
+
+
+
